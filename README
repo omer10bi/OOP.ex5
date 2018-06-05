@@ -1,0 +1,90 @@
+nizantyroler
+
+
+
+
+=============================
+=      File description     =
+=============================
+we create the following classes in our code:
+DirectoryProcessor- has the main method that menege the program.
+Parse- gets the CommandFile path and process it to sections, for each section it create SectionData object.
+this class can also return SectionData array.
+SectionData- this class create an object that hold all of the information that is needed to create Section object.
+i.e : filter type, filter param, is filter NOT, filter line, order type, is order REVERSE.
+Section this class constructure SectionData object and file array from sourcedirectory. it create Filter object and Order object
+and it can do printFiles method that use File and Order objects. 
+FilterFactory create the righte type of Filter object.
+OrderFactory - create the right type of order object.
+Filter- this is an abstarct super-class for all types of filters. it return true or false if a certian file pass this filter.
+this class can throw exception when we create object with worn parameters.
+Order-this is an abstarct super-class for all types of orders. it get an array of files and return an orderd array of those files.
+this class can throw exception when we create object with worn parameters.
+Type1Exception- create warning exceptions.
+Type2Exception - create error exceptions.
+
+
+=============================
+=          Design           =
+=============================
+we desgin our code in the following way:
+the main method in DirectoryProcessor get's the Source Directory and the CommandFile string reprsention.
+the DirectoryProcessor pass the CommandFile to Parse. Parse devide the text to section, and for each section it create an
+object of SectionData. SectionData is a class that it's object hold the following information:
+filter type
+filter Parameters
+is filter NOT
+filter line
+order type
+is order REVERSE
+order line.
+so Parse class create array of SectionData object.
+DirectoryProcessor get's the SectionData array and for each object it create a Section object and call Section.printFiles().
+Section object is an object that has Filter object Order object and SourceDirectory as field members and it has printFiles() method.
+printFiles method use the Filter object to filter SourceDirectory and the Order object to Order them. and then it print the files.
+Filter class is an abstarct class that every specific Filter type implement this class.
+we also create some abstarct suc classes of Filter. for example NameFilter is an abstarct subclass of Filter and all the Filters
+that filter according to the file's name are extanding NameFilter.
+ we use FilterFactory to determine wich kind
+of filter to create, and to be able to treat all of filter objects the same way.
+the same goes with Order class.
+In Filter and Order we implammented NOT and REVERSE method as a decoretor.
+we implemented 2 classes of exception: Type1Exception , Type2Exception.
+Type1Exception is a warrning exception. it call with an int Param
+that indicate the line where the warrning took place in the CommandFile.
+this exception is throwed and catch when we create Filter/Order object. and then it continue the program normaly.
+Type2Exception is an ERROR exception that get a String mesage and throw standart err with the sepcific mesage it got.
+all Type2Exception are throwed in Parse class when we create SectionData array, and they are catched in DirectoryProcessor main method.
+our design support 3 designing principle we learnd in class:
+1) single choice principle
+when ever we have some alternative choice we put then all in one class to dicede wich path do we take.
+for example all the alternative of Filter/Order type is in Filter/Order Factory, and this class also decide what kind of object to create.
+and from there and on all Filter/Order treated the same.
+wealso created Parse by this principle. only this class is dealing with procesdsing the CommandFile to section.
+2) Factory
+we used FilterFactory and OrderFactory to simplfy the creation of this objects. the Factory check wich kind of object do we need to
+create and it create it. and becuase Filter/Order are an abstarct classes we can treat all object the same
+3)Decoretor
+we use this design to implament NOT filters and REVERSE Orders.
+
+EXCEPTION HIERARCHY
+we have no have no hierarchy in the exception becuase we have only 2 difrent kind of exception.
+Type1Exception- gets the num of the line where the parameters where worng. it print " warning in line (the right line)"
+we didnt see a way to divide this exception to different kind with some hierarchy.
+Type2Exception- this exception throw's  error exception with infomative message.
+this exception can be divided to one abstarct class and some other subclasses that each subclass throw different message.
+but we didnt designt it that way. way build one class that get as a parameter a String message and print it with the ERROR.
+
+
+
+=============================
+=  Implementation details   =
+=============================
+SORTING
+in order to sort the files array we implamented mergesort.
+i.e we took the array and divide to half. each half we sorted with mergesort as well, and then we merged the to sorted arrayes.
+we use array data structure. we use it becuase it easy to implament mergesort with this structure. and we chose to use mergesort
+becuse it is easy to wirte and its quick.
+
+
+
