@@ -63,10 +63,14 @@ public class SectionData {
             filterParam = Arrays.copyOfRange(filterSplit,1,filterSplit.length);
         }
     }
+    
+    public String getFilterType(){
+		return filterType;
+	}
 
-
-
-
+	public String getOrderType() {
+		return orderType;
+	}
 
 
     public int getFilterLine(){
